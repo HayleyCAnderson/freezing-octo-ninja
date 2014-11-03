@@ -1,7 +1,10 @@
 class Deck
+  attr_accessor :deck
+
   def initialize
     @deck = []
     make_deck
+    @deck.shuffle!
   end
 
   def make_deck
@@ -31,12 +34,4 @@ class Deck
       end
     end
   end
-
-  def show_deck
-    puts @deck
-    puts @deck.length
-  end
 end
-
-deck = Deck.new
-deck.show_deck
