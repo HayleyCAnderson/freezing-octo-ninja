@@ -1,43 +1,45 @@
 class HandChecker
+  def initialize
+    @ranks = []
+    @suits = []
+  end
+
   def check(hand)
     @hand = hand
     order_ranks
     gather_suits
-    return compare
+    return "\n#{ highest_hand }\n\n"
   end
 
-  def compare
-    if ranks_count == 4
-      return "\nOne Pair\n\n"
-    elsif unique_ranks? and same_suit?
-      return "\nStraight Flush\n\n"
+  def highest_hand
+    if unique_ranks? and ranks_sequential? and same_suit?
+      return "Straight Flush"
     elsif unique_ranks? and ranks_sequential?
-      return "\nStraight\n\n"
+      return "Straight"
     elsif same_suit?
-      return "\nFlush\n\n"
+      return "Flush"
+    elsif ranks_count == 4
+      return "One Pair"
     elsif multiple_multiples_of_ranks? and ranks_count == 3
-      return "\nTwo Pair\n\n"
+      return "Two Pair"
     elsif multiple_multiples_of_ranks? and ranks_count == 2
-      return "\nFull House\n\n"
+      return "Full House"
     elsif ranks_count == 3
-      return "\nThree of a Kind\n\n"
+      return "Three of a Kind"
     elsif ranks_count == 2
-      return "\nFour of a Kind\n\n"
+      return "Four of a Kind"
     else
-      return "\nHigh Card: #{ highest_card.join }\n\n"
+      return "High Card: #{ highest_card.join }"
     end
   end
 
   def order_ranks
-    @ranks = []
     @hand.each { |card| @ranks << card[0] }
     replace_royals
     @ranks.sort!
-    highest_card
   end
 
   def gather_suits
-    @suits = []
     @hand.each { |card| @suits << card[1] }
   end
 
@@ -63,9 +65,9 @@ class HandChecker
   def ranks_sequential?
     total_differences = 0
     @ranks.each do |rank|
-      index = @ranks.index(rank)
-      difference = @ranks[index + 1].to_i - rank.to_i
-      total_differences += difference unless index == @ranks.length - 1
+      current_index = @ranks.index(rank)
+      difference = @ranks[current_index + 1] - rank
+      total_differences += difference unless ( current_index == @ranks.length - 1 )
     end
     total_differences == 5
   end
@@ -85,7 +87,7 @@ class HandChecker
     @highest_rank = @ranks.last
     return_to_royals
     high_card_index = @hand.index { |card| card[0] == @highest_rank}
-    @highest_card = @hand[high_card_index]
+    return @hand[high_card_index]
   end
 
   def return_to_royals
