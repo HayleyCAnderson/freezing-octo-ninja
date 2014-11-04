@@ -9,6 +9,7 @@ class Game
     welcome_user
     get_user_move
     call_ai
+    determine_score
   end
 
   def welcome_user
@@ -20,16 +21,20 @@ class Game
   def get_user_move
     print "Your move? (r/p/s, q to quit) > "
     @user_move = gets.chomp
-    try_again_user until valid_user_move
+    try_again_user until valid_user_move || @user_move == "q"
   end
 
   def call_ai
     ai = Ai.new
-    ai.call
+    @ai_move = ai.get_ai_move
+  end
+
+  def determine_score
+    ScoreDeterminer.new(@user_move, @ai_move)
   end
 
   def valid_user_move
-    @user_move == "r" || @user_move == "p" || @user_move == "s" || @user_move == "q"
+    @user_move == "r" || @user_move == "p" || @user_move == "s"
   end
 
   def try_again_user
