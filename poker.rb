@@ -1,6 +1,5 @@
 require "./deck.rb"
 require "./player.rb"
-require "./hand.rb"
 
 class Poker
   def initialize

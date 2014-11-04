@@ -4,11 +4,12 @@ class Player
 
   def initialize(number)
     @name = "Player " + number.to_s
+    @hand = []
   end
 
   def get_hand(deck)
-    my_hand = Hand.new
-    my_hand.get_cards(deck)
-    @hand = my_hand.hand
+    5.times do
+      @hand << deck.pop
+    end
   end
 end
