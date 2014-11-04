@@ -45,7 +45,8 @@ class Poker
     @players.each do |player|
       puts player.name
       puts "-" * player.name.length
-      player.hand.each { |card| puts card.join }
+      @hand = player.hand
+      @hand.each { |card| puts card.join }
       puts
     end
   end
