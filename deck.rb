@@ -23,7 +23,7 @@ class Deck
   end
 
   def get_royal_cards
-    royals = ["A", "J", "Q", "K"]
+    royals = ["J", "Q", "K", "A"]
     add_suit(royals)
   end
 
