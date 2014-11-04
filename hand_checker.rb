@@ -9,39 +9,45 @@ class HandChecker
   def initialize
   end
 
-  def check
-    get_orders
-    compare
+  def check(hand)
+    @hand = hand
+    order_ranks
+    gather_suits
+    return compare
   end
 
   def compare
-    puts "Straight Flush" if unique_ranks? and same_suit?
-    puts "Straight" if unique_ranks? and sequential? not same_suit?
-    puts "Flush" if same_suit not unique_ranks?
-    puts "High Card" if unique_ranks? not sequential?
+    return "Straight Flush" if unique_ranks? and same_suit?
+    return "Straight" if unique_ranks? and sequential? unless same_suit?
+    return "Flush" if same_suit? unless unique_ranks?
+    return "High Card" if unique_ranks? unless sequential?
   end
 
-  def get_orders
+  def order_ranks
     @ranks = []
-    order(@ranks, 0)
-    @suits = []
-    order(@suits, 1)
+    @hand.each { |card| @ranks << card[0] }
+    replace
+    @ranks.sort!
   end
 
-  def order(card_aspect, placement)
-    @hand.each do |card|
-      card_aspect << card[placement]
-    end
-    replace
-    card_aspect.sort!
+  def gather_suits
+    @suits = []
+    @hand.each { |card| @suits << card[1] }
   end
 
   def replace
     @ranks.map! do |rank|
-      rank = 11 if rank == "J"
-      rank = 12 if rank == "Q"
-      rank = 13 if rank == "K"
-      rank = 14 if rank == "A"
+      if rank == "J"
+        11
+      elsif rank == "Q"
+        12
+      elsif rank == "K"
+        13
+      elsif rank == "A"
+        14
+      else
+        rank.to_i
+      end
     end
   end
 
@@ -57,7 +63,8 @@ class HandChecker
     total_differences = 0
     @ranks.each do |rank|
       index = @ranks.index(rank)
-      total_differences + @ranks[index + 1] - rank
+      difference = @ranks[index + 1].to_i - rank.to_i
+      total_differences += difference unless index == @ranks.length - 1
     end
     total_differences == 5
   end

@@ -1,5 +1,6 @@
 require "./deck.rb"
 require "./player.rb"
+require "./hand_checker.rb"
 
 class Poker
   def initialize
@@ -47,8 +48,13 @@ class Poker
       puts "-" * player.name.length
       @hand = player.hand
       @hand.each { |card| puts card.join }
-      puts
+      check_hand
     end
+  end
+
+  def check_hand
+    hand_checker = HandChecker.new
+    puts hand_checker.check(@hand)
   end
 end
 
