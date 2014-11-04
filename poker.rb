@@ -23,15 +23,15 @@ class Poker
   def get_players
     @players = []
     puts "How many players are there?"
-    @players_num = gets.chomp
-    @players_count = @players_num.to_i
+    @players_count = gets.chomp
+    @players_count = @players_count.to_i
     get_players_again until @players_count > 1 and @players_count < 10
   end
 
   def get_players_again
     puts "Please choose a number between 1 and 10."
-    @players_num = gets.chomp
-    @players_count = @players_num.to_i
+    @players_count = gets.chomp
+    @players_count = @players_count.to_i
   end
 
   def deal
