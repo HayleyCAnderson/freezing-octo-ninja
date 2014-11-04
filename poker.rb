@@ -15,7 +15,7 @@ class Poker
   end
 
   def show_deck
-    puts @deck
+    @deck.each { |card| puts card.join }
     puts "#{ @deck.count } cards"
   end
 
@@ -44,7 +44,9 @@ class Poker
   def show_hands
     @players.each do |player|
       puts player.name
-      puts player.hand
+      puts "-" * player.name.length
+      player.hand.each { |card| puts card.join }
+      puts
     end
   end
 end

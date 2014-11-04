@@ -8,29 +8,29 @@ class Deck
   end
 
   def make_deck
-    get_suites
+    get_suits
     get_number_cards
     get_royal_cards
   end
 
-  def get_suites
-    @suites = ["C", "D", "H", "S"]
+  def get_suits
+    @suits = ["C", "D", "H", "S"]
   end
 
   def get_number_cards
     numbers = (2..10)
-    add_suite(numbers)
+    add_suit(numbers)
   end
 
   def get_royal_cards
     royals = ["A", "J", "Q", "K"]
-    add_suite(royals)
+    add_suit(royals)
   end
 
-  def add_suite(cards)
+  def add_suit(cards)
     cards.each do |card|
-      @suites.each do |suite|
-        @deck << card.to_s + suite.to_s
+      @suits.each do |suit|
+        @deck << [card.to_s, suit]
       end
     end
   end
