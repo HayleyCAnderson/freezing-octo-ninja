@@ -73,10 +73,8 @@ class HandChecker
   end
 
   def multiple_multiples_of_ranks?
-    multiples = @ranks.select { |rank| @ranks.count(rank) > 1 }
-    if multiples.uniq.length > 1 then return true
-    else return false
-    end
+    sets_of_multiples = @ranks.select { |rank| @ranks.count(rank) > 1 }
+    sets_of_multiples.uniq.length > 1
   end
 
   def ranks_count
@@ -86,7 +84,7 @@ class HandChecker
   def highest_card
     @highest_rank = @ranks.last
     return_to_royals
-    high_card_index = @hand.index { |card| card[0] == @highest_rank}
+    high_card_index = @hand.index { |card| card[0] == @highest_rank }
     return @hand[high_card_index]
   end
 
