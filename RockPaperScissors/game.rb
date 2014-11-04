@@ -3,12 +3,12 @@ require "./score_determiner.rb"
 
 class Game
   def initialize
-    new_ai = Ai.new
   end
 
   def play
     welcome_user
-    ask_for_move
+    get_user_move
+    call_ai
   end
 
   def welcome_user
@@ -17,8 +17,24 @@ class Game
     puts "Let's play!"
   end
 
-  def ask_for_move
-    print "Your move? (R/P/S, q to quit) > "
+  def get_user_move
+    print "Your move? (r/p/s, q to quit) > "
+    @user_move = gets.chomp
+    try_again_user until valid_user_move
+  end
+
+  def call_ai
+    ai = Ai.new
+    ai.call
+  end
+
+  def valid_user_move
+    @user_move == "r" || @user_move == "p" || @user_move == "s" || @user_move == "q"
+  end
+
+  def try_again_user
+    puts "You must put 'r' for rock, 'p' for paper, 's' for scissors, or 'q' to quit."
+    print "Try again > "
     @user_move = gets.chomp
   end
 end
