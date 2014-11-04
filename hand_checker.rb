@@ -1,10 +1,3 @@
-# three_of_a_kind = three of same rank, @ranks.uniq.count = 3
-# four_of_a_kind = four of same rank, @ranks.uniq.count = 2
-
-# one_pair = two of one rank, @ranks.uniq.count = 4
-# two_pair = two of one rank plus two of another, @ranks.uniq.count = 3
-# full_house = three of one rank plus two of another, @ranks.uniq.count = 2
-
 class HandChecker
   def initialize
   end
@@ -17,10 +10,25 @@ class HandChecker
   end
 
   def compare
-    return "Straight Flush" if unique_ranks? and same_suit?
-    return "Straight" if unique_ranks? and sequential? unless same_suit?
-    return "Flush" if same_suit? unless unique_ranks?
-    return "High Card" if unique_ranks? unless sequential?
+    if ranks_count == 4
+      return "One Pair"
+    elsif unique_ranks? and same_suit?
+      return "Straight Flush"
+    elsif unique_ranks? and ranks_sequential?
+      return "Straight"
+    elsif same_suit?
+      return "Flush"
+    elsif multiple_multiples_of_ranks? and ranks_count == 3
+      return "Two Pair"
+    elsif multiple_multiples_of_ranks? and ranks_count == 2
+      return "Full House"
+    elsif ranks_count == 3
+      return "Three of a Kind"
+    elsif ranks_count == 2
+      return "Four of a Kind"
+    else
+      return "High Card"
+    end
   end
 
   def order_ranks
@@ -51,15 +59,15 @@ class HandChecker
     end
   end
 
-  def unique_ranks?
-    @ranks.uniq.length == 5
-  end
-
   def same_suit?
     @suits.uniq.length == 1
   end
 
-  def sequential?
+  def unique_ranks?
+    @ranks.uniq == nil
+  end
+
+  def ranks_sequential?
     total_differences = 0
     @ranks.each do |rank|
       index = @ranks.index(rank)
@@ -67,5 +75,18 @@ class HandChecker
       total_differences += difference unless index == @ranks.length - 1
     end
     total_differences == 5
+  end
+
+  def ranks_count
+    return @ranks.uniq.length
+  end
+
+  def multiple_multiples_of_ranks?
+    multiples = @ranks.select { |rank| @ranks.count(rank) > 1 }
+    if multiples.uniq.length > 1
+      return true
+    else
+      return false
+    end
   end
 end
