@@ -24,15 +24,16 @@ class HandChecker
     elsif ranks_count == 2
       return "\nFour of a Kind\n\n"
     else
-      return "\nHigh Card\n\n"
+      return "\nHigh Card: #{ highest_card.join }\n\n"
     end
   end
 
   def order_ranks
     @ranks = []
     @hand.each { |card| @ranks << card[0] }
-    replace
+    replace_royals
     @ranks.sort!
+    highest_card
   end
 
   def gather_suits
@@ -40,7 +41,7 @@ class HandChecker
     @hand.each { |card| @suits << card[1] }
   end
 
-  def replace
+  def replace_royals
     @ranks.map! do |rank|
       if rank == "J" then 11
       elsif rank == "Q" then 12
@@ -69,16 +70,30 @@ class HandChecker
     total_differences == 5
   end
 
+  def multiple_multiples_of_ranks?
+    multiples = @ranks.select { |rank| @ranks.count(rank) > 1 }
+    if multiples.uniq.length > 1 then return true
+    else return false
+    end
+  end
+
   def ranks_count
     return @ranks.uniq.length
   end
 
-  def multiple_multiples_of_ranks?
-    multiples = @ranks.select { |rank| @ranks.count(rank) > 1 }
-    if multiples.uniq.length > 1
-      return true
-    else
-      return false
+  def highest_card
+    @highest_rank = @ranks.last
+    return_to_royals
+    high_card_index = @hand.index { |card| card[0] == @highest_rank}
+    @highest_card = @hand[high_card_index]
+  end
+
+  def return_to_royals
+    if @highest_rank == 11 then @highest_rank = "J"
+    elsif @highest_rank == 12 then @highest_rank = "Q"
+    elsif @highest_rank == 13 then @highest_rank = "K"
+    elsif @highest_rank == 14 then @highest_rank = "A"
+    else @highest_rank = @highest_rank.to_s
     end
   end
 end
