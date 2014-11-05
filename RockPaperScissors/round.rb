@@ -6,9 +6,9 @@ class Round
     @score_keeper = score_keeper
   end
 
-  def play_round
+  def play_round(ai_type)
     get_user_move
-    call_ai
+    call_ai(ai_type)
     winner
     show_score
   end
@@ -24,9 +24,15 @@ class Round
     @user_move == "q"
   end
 
-  def call_ai
+  def call_ai(ai_type)
     ai = Ai.new
-    @ai_move = ai.get_ai_move
+    if ai_type == "cheater"
+       @ai_move = ai.get_cheater_move(@user_move)
+    elsif ai_type == "loser"
+       @ai_move = ai.get_loser_move(@user_move)
+    else
+      @ai_move = ai.get_ai_move
+    end
   end
 
   def winner
