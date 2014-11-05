@@ -9,7 +9,7 @@ class Game
     welcome_user
     get_user_move
     call_ai
-    determine_score
+    get_score
   end
 
   def welcome_user
@@ -29,8 +29,11 @@ class Game
     @ai_move = ai.get_ai_move
   end
 
-  def determine_score
-    ScoreDeterminer.new(@user_move, @ai_move)
+  def get_score
+    puts "AI's move: #{ @ai_move }"
+    score_determiner = ScoreDeterminer.new(@user_move, @ai_move)
+    puts "Winner: "
+    puts score_determiner.find_winner
   end
 
   def valid_user_move
