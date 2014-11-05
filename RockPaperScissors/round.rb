@@ -20,10 +20,6 @@ class Round
     exit if quit?
   end
 
-  def quit?
-    @user_move == "q"
-  end
-
   def call_ai(ai_type)
     ai = Ai.new
     if ai_type == "cheater"
@@ -45,6 +41,12 @@ class Round
     puts "* Winner: #{ winner } *"
     puts "You have won #{ @score_keeper.track(winner) }% of rounds."
   end
+
+  def quit?
+    @user_move == "q"
+  end
+
+  private
 
   def valid_user_move?
     @user_move == "r" || @user_move == "p" || @user_move == "s"

@@ -24,6 +24,8 @@ class ScoreKeeper
     ( @user_wins.to_f / total ) * 100
   end
 
+  private
+
   def total
     @user_wins + @ai_wins + @ties
   end

@@ -15,6 +15,8 @@ class WinDeterminer
     end
   end
 
+  private
+
   def rock_wins?
     @moves.has_value?("r") and @moves.has_value?("s")
   end
