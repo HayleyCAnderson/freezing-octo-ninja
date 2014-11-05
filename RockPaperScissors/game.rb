@@ -22,6 +22,7 @@ class Game
     print "Your move? (r/p/s, q to quit) > "
     @user_move = gets.chomp
     try_again_user until valid_user_move || @user_move == "q"
+    exit if @user_move == "q"
   end
 
   def call_ai
