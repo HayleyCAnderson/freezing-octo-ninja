@@ -11,7 +11,7 @@ class WinDeterminer
     elsif scissors_wins?
       return @moves.key("s")
     else
-      return "tie"
+      return :tie
     end
   end
 

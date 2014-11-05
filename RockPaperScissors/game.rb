@@ -1,12 +1,16 @@
 require "./round.rb"
+require "./score_keeper.rb"
 
 class Game
   def initialize
+    @score_keeper = ScoreKeeper.new
   end
 
   def play
     welcome_user
-    start_rounds
+    begin
+      play_rounds
+    end until @round.quit?
   end
 
   def welcome_user
@@ -15,12 +19,11 @@ class Game
     puts "Let's play!"
   end
 
-  def start_rounds
-    round = Round.new
-    round.play_round
-    start_rounds until round.quit?
+  def play_rounds
+    @round = Round.new(@score_keeper)
+    @round.play_round
   end
 end
 
-new_game = Game.new
-new_game.play
+game = Game.new
+game.play

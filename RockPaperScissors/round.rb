@@ -2,7 +2,8 @@ require "./ai.rb"
 require "./win_determiner.rb"
 
 class Round
-  def initialize
+  def initialize(score_keeper)
+    @score_keeper = score_keeper
   end
 
   def play_round
@@ -36,6 +37,7 @@ class Round
   def show_score
     puts "AI's move: #{ @ai_move }"
     puts "* Winner: #{ winner } *"
+    puts "You have won #{ @score_keeper.track(winner) }% of rounds."
   end
 
   def valid_user_move?
