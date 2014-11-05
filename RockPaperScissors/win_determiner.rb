@@ -1,8 +1,4 @@
-# rock beats scissors
-# paper beats rock
-# scissors beats paper
-
-class ScoreDeterminer
+class WinDeterminer
   def initialize(user_move, ai_move)
     @moves = { user: user_move, ai: ai_move }
   end

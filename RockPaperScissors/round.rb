@@ -1,5 +1,5 @@
 require "./ai.rb"
-require "./score_determiner.rb"
+require "./win_determiner.rb"
 
 class Round
   def initialize
@@ -29,8 +29,8 @@ class Round
   end
 
   def winner
-    score_determiner = ScoreDeterminer.new(@user_move, @ai_move)
-    return score_determiner.find_winner
+    win_determiner = WinDeterminer.new(@user_move, @ai_move)
+    return win_determiner.find_winner
   end
 
   def show_score
