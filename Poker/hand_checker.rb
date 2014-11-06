@@ -58,7 +58,7 @@ class HandChecker
   end
 
   def unique_ranks?
-    @ranks.uniq == nil
+    @ranks.uniq.length == 5
   end
 
   def ranks_sequential?
