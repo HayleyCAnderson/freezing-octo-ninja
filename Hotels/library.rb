@@ -20,6 +20,6 @@ class Library
   end
 
   def clean(data)
-    data.gsub(/[^0-9a-zA-Z]/, "")
+    data.gsub(/[^0-9a-zA-Z]/, "").strip
   end
 end
