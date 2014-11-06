@@ -14,28 +14,28 @@ class HandChecker
     @hand = hand
     order_ranks
     gather_suits
-    return "\n#{ highest_hand }\n\n"
+    "\n#{ highest_hand }\n\n"
   end
 
   def highest_hand
     if unique_ranks? and ranks_sequential? and same_suit?
-      return "Straight Flush"
+      "Straight Flush"
     elsif unique_ranks? and ranks_sequential?
-      return "Straight"
+      "Straight"
     elsif same_suit?
-      return "Flush"
+      "Flush"
     elsif ranks_count == 4
-      return "One Pair"
+      "One Pair"
     elsif multiple_multiples_of_ranks? and ranks_count == 3
-      return "Two Pair"
+      "Two Pair"
     elsif multiple_multiples_of_ranks? and ranks_count == 2
-      return "Full House"
+      "Full House"
     elsif ranks_count == 3
-      return "Three of a Kind"
+      "Three of a Kind"
     elsif ranks_count == 2
-      return "Four of a Kind"
+      "Four of a Kind"
     else
-      return "High Card: #{ highest_card.join }"
+      "High Card: #{ highest_card.join }"
     end
   end
 
@@ -77,14 +77,14 @@ class HandChecker
   end
 
   def ranks_count
-    return @ranks.uniq.length
+    @ranks.uniq.length
   end
 
   def highest_card
     return_to_royals
     highest_rank = @ranks.last
     high_card_index = @hand.index { |card| card[0] == highest_rank }
-    return @hand[high_card_index]
+    @hand[high_card_index]
   end
 
   def return_to_royals
