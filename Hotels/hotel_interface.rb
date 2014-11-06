@@ -1,5 +1,4 @@
 require "./library.rb"
-require "./hotel.rb"
 require "./null_hotel.rb"
 
 class HotelInterface
