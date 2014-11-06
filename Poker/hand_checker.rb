@@ -1,4 +1,10 @@
 class HandChecker
+  CARD_NUMBERS = {
+    "J" => 11,
+    "Q" => 12,
+    "K" => 13,
+    "A" => 14
+  }
   def initialize
     @ranks = []
     @suits = []
@@ -44,14 +50,7 @@ class HandChecker
   end
 
   def replace_royals
-    @ranks.map! do |rank|
-      if rank == "J" then 11
-      elsif rank == "Q" then 12
-      elsif rank == "K" then 13
-      elsif rank == "A" then 14
-      else rank.to_i
-      end
-    end
+    @ranks = @ranks.map { |rank| CARD_NUMBERS[rank] || rank.to_i }
   end
 
   def same_suit?
@@ -82,18 +81,13 @@ class HandChecker
   end
 
   def highest_card
-    @highest_rank = @ranks.last
     return_to_royals
-    high_card_index = @hand.index { |card| card[0] == @highest_rank }
+    highest_rank = @ranks.last
+    high_card_index = @hand.index { |card| card[0] == highest_rank }
     return @hand[high_card_index]
   end
 
   def return_to_royals
-    if @highest_rank == 11 then @highest_rank = "J"
-    elsif @highest_rank == 12 then @highest_rank = "Q"
-    elsif @highest_rank == 13 then @highest_rank = "K"
-    elsif @highest_rank == 14 then @highest_rank = "A"
-    else @highest_rank = @highest_rank.to_s
-    end
+    @ranks = @ranks.map { |rank| CARD_NUMBERS.key(rank) || rank.to_s }
   end
 end
