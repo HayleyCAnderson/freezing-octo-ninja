@@ -15,19 +15,19 @@ class HotelInterface
   end
 
   def show_hotels
-    puts "Hotels:"
+    puts "\nHotels:\n\n"
     @hotels.list
   end
 
   def get_query
-    print "Which hotel? > "
+    print "\nWhich hotel? > "
     query = gets.chomp
     show_result(@hotels.find(query) || NullHotel.new)
   end
 
   def show_result(hotel)
     puts
-    puts hotel.information
+    hotel.information
   end
 end
 

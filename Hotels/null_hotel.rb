@@ -1,5 +1,5 @@
 class NullHotel
   def information
-    "No hotel found.\n\n"
+    puts "No hotel found."
   end
 end
