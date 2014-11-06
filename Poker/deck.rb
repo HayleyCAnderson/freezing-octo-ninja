@@ -13,6 +13,8 @@ class Deck
     get_royal_cards
   end
 
+  private
+
   def get_suits
     @suits = ["C", "D", "H", "S"]
   end

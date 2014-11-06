@@ -1,11 +1,8 @@
+require "./card_converter.rb"
+
 class HandChecker
-  CARD_NUMBERS = {
-    "J" => 11,
-    "Q" => 12,
-    "K" => 13,
-    "A" => 14
-  }
   def initialize
+    @card_converter = CardConverter.new
     @ranks = []
     @suits = []
   end
@@ -41,7 +38,7 @@ class HandChecker
 
   def order_ranks
     @hand.each { |card| @ranks << card[0] }
-    replace_royals
+    @ranks = @card_converter.replace(@ranks)
     @ranks.sort!
   end
 
@@ -49,9 +46,7 @@ class HandChecker
     @hand.each { |card| @suits << card[1] }
   end
 
-  def replace_royals
-    @ranks = @ranks.map { |rank| CARD_NUMBERS[rank] || rank.to_i }
-  end
+  private
 
   def same_suit?
     @suits.uniq.length == 1
@@ -62,13 +57,7 @@ class HandChecker
   end
 
   def ranks_sequential?
-    total_differences = 0
-    @ranks.each do |rank|
-      current_index = @ranks.index(rank)
-      difference = @ranks[current_index + 1] - rank
-      total_differences += difference unless ( current_index == @ranks.length - 1 )
-    end
-    total_differences == 5
+    (@ranks.first..@ranks.last) == @ranks
   end
 
   def multiple_multiples_of_ranks?
@@ -81,13 +70,8 @@ class HandChecker
   end
 
   def highest_card
-    return_to_royals
-    highest_rank = @ranks.last
-    high_card_index = @hand.index { |card| card[0] == highest_rank }
-    @hand[high_card_index]
-  end
-
-  def return_to_royals
-    @ranks = @ranks.map { |rank| CARD_NUMBERS.key(rank) || rank.to_s }
+    @ranks = @card_converter.return(@ranks)
+    highest_card_placement = @hand.index { |card| card[0] == @ranks.last }
+    @hand[highest_card_placement]
   end
 end
