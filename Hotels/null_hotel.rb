@@ -1,5 +1,5 @@
 class NullHotel
-  def [](null)
-    "No hotel found."
+  def information
+    "No hotel found.\n\n"
   end
 end

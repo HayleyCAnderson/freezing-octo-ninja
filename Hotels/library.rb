@@ -1,31 +1,23 @@
+require "./hotel.rb"
+
 class Library
   require "csv"
 
-  attr_accessor :library
-
   def initialize
-    @library = {}
+    @library = []
   end
 
-  def get_data
+  def create
     CSV.foreach("hotels.csv", headers: true) do |row|
-      hotel_name = clean(row["Hotel"])
-      hotel_info = {
-        city: clean(row["City"]),
-        phone: pretty_phone(clean(row["Phone Number"])),
-        rooms: clean(row["Number of Singles"]).to_i + clean(row["Number of Doubles"]).to_i
-      }
-      @library[hotel_name] = hotel_info
+      @library << Hotel.new(row)
     end
   end
 
-  private
-
-  def clean(data)
-    data.gsub(/[^\s\w]/, "").strip
+  def list
+    @library.each { |hotel| puts hotel.name }
   end
 
-  def pretty_phone(number)
-    number.insert(3, "-").insert(7, "-")
+  def find(query)
+    @library.find { |hotel| hotel.name == query }
   end
 end

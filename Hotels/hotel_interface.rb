@@ -1,34 +1,34 @@
 require "./library.rb"
+require "./hotel.rb"
 require "./null_hotel.rb"
 
 class HotelInterface
   def initialize
     @hotels = Library.new
-    @hotels.get_data
+    @hotels.create
   end
 
   def run
-    print_hotel_names
+    show_hotels
     loop do
-      user_query
+      get_query
     end
   end
 
-  def print_hotel_names
+  def show_hotels
     puts "Hotels:"
-    puts @hotels.library.keys
+    @hotels.list
   end
 
-  def user_query
+  def get_query
     print "Which hotel? > "
-    @query = gets.chomp
-    show_result(@hotels.library[@query] || NullHotel.new)
+    query = gets.chomp
+    show_result(@hotels.find(query) || NullHotel.new)
   end
 
   def show_result(hotel)
-    puts "City: #{ hotel[:city] }"
-    puts "Phone Number: #{ hotel[:phone] }"
-    puts "Number of Rooms: #{ hotel[:rooms] }"
+    puts
+    puts hotel.information
   end
 end
 
