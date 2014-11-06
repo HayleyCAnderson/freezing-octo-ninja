@@ -1,5 +1,5 @@
 class NullHotel
-  def initialize
+  def [](null)
     "No hotel found."
   end
 end

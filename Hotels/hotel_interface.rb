@@ -22,7 +22,7 @@ class HotelInterface
   def user_query
     print "Which hotel? > "
     @query = gets.chomp
-    show_result(@hotels.library[@query]) || NullHotel.new
+    show_result(@hotels.library[@query] || NullHotel.new)
   end
 
   def show_result(hotel)
