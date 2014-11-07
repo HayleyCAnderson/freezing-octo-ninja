@@ -9,7 +9,11 @@ class Game
   def play
     welcome_user
     choose_ai
-    play_rounds until quit?
+    get_user_move
+    until quit?
+      play_round
+      get_user_move
+    end
   end
 
   def welcome_user
@@ -19,30 +23,40 @@ class Game
 
   def choose_ai
     puts "\nWhich AI would you like to play against?"
-    print "cheater, loser, or default? (q to quit)> "
+    print "cheater, loser, or default? > "
     @ai_type = gets.chomp.downcase
-    choose_again until valid_ai_choice? || quit?
-    exit if quit?
+    @ai_type = "default" unless special_ai?
   end
 
-  def play_rounds
+  def play_round
     @round = Round.new(@score_keeper)
-    @round.play_round(@ai_type)
+    @round.play(@ai_type, @user_move)
   end
 
-  def quit?
-    @ai_type == "q"
+  def get_user_move
+    print "Your move? (r/p/s, q to quit) > "
+    @user_move = gets.chomp
+    try_again until valid_user_move? or quit?
   end
 
   private
 
-  def valid_ai_choice?
-    @ai_type == "cheater" || @ai_type == "loser" || @ai_type == "default"
+  def quit?
+    @user_move == "q"
   end
 
-  def choose_again
-    print "Please choose 'cheater', 'loser', or 'default' (or 'q' to quit)> "
-    @ai_type = gets.chomp.downcase
+  def special_ai?
+    @ai_type == "cheater" || @ai_type == "loser"
+  end
+
+  def valid_user_move?
+    @user_move == "r" || @user_move == "p" || @user_move == "s"
+  end
+
+  def try_again
+    puts "You must put 'r' for rock, 'p' for paper, 's' for scissors, or 'q' to quit."
+    print "Try again > "
+    @user_move = gets.chomp
   end
 end
 
